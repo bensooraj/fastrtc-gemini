@@ -7,7 +7,10 @@ authors = [
     { name = "bensooraj", email = "bensooraj@users.noreply.github.com" }
 ]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "fastrtc[stt,tts,vad]>=0.0.32",
+    "numpy>=2.2.6",
+]
 
 [project.scripts]
 fastrtc-gemini = "fastrtc_gemini:main"
