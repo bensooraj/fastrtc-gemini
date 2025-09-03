@@ -23,27 +23,32 @@ def echo(audio: tuple[int, np.ndarray]):
     else:
         print(f"prompt: {prompt}")
 
-    response = google_gemini_client.chat.completions.create(
-        # model="gemini-2.0-flash",
-        model="gemini-1.5-flash",
-        messages=[
-            {
-                "role": "system",
-                "content": "You are an interactive kids bedtime storytelling Voice AI assistant named Hannah. Use simple language with a range of vocabulary. Do not use emojis or any kind of formatting.",
-            },
-            {"role": "user", "content": prompt},
-        ],
-        modalities=["text"],
-        max_tokens=200,
-        temperature=1,
-        top_p=0.95,
-    )
+    response_message_content = ""
+    try:
+        response = google_gemini_client.chat.completions.create(
+            # model="gemini-2.0-flash",
+            model="gemini-1.5-flash",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an interactive kids bedtime storytelling Voice AI assistant named Hannah. Use simple language with a range of vocabulary. You also can add minimalistic utterances like 'uh-huh' or 'mm-hmm' to the conversation to make it more natural. However, no actions or other non-vocal sounds are allowed. Do not use emojis or any kind of formatting.",
+                },
+                {"role": "user", "content": prompt},
+            ],
+            modalities=["text"],
+            max_tokens=200,
+            temperature=1,
+            top_p=0.95,
+        )
+        response_message_content = response.choices[0].message.content
+        if response_message_content is None:
+            print(f"response_message_content is empty. response: {response}")
+            response_message_content = "Sorry, I am still thinking. Can you please try asking me something again?"
 
-    response_message_content = response.choices[0].message.content
-    if response_message_content is None:
-        print("response_message_content is empty")
-        print(f"response: {response}")
-        response_message_content = ""
+    except Exception as e:
+        print(f"Error during Gemini API call: {e}")
+        response_message_content = "Sorry, something went wrong. Can you please tell me what you would like to hear from me?"
+
     for audio_chunk in tts_model.stream_tts_sync(response_message_content):
         yield audio_chunk
 
