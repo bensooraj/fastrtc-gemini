@@ -1,0 +1,14 @@
+[Unit]
+Description=FastRTC App
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/app
+ExecStart=/root/.local/bin/uv run fastrtc-gemini
+Restart=always
+RestartSec=3
+Environment="PATH=/opt/app/app/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/.local/bin"
+
+[Install]
+WantedBy=multi-user.target

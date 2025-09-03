@@ -1,0 +1,30 @@
+#!/bin/bash
+set -eux
+
+sudo su
+
+# Update & tools
+dnf -y update
+dnf -y install git curl --allowerasing
+
+# Install uv (https://astral.sh/uv)
+curl -LsSf https://astral.sh/uv/install.sh | sh
+export PATH="/root/.cargo/bin:$PATH"
+
+# App directory
+cd /opt
+
+# Clone your repo (replace with your URL)
+git clone ${github_repo_url} app
+cd app
+
+# Copy systemd service script
+cp iac/user_data/fastrtc.service /etc/systemd/system/fastrtc.service
+
+# Dependency sync (uses pyproject.toml + uv.lock)
+export GEMINI_API_KEY=${gemini_api_key}
+uv sync --frozen --no-cache
+
+systemctl daemon-reload
+systemctl enable --now fastrtc.service
+systemctl start fastrtc.service

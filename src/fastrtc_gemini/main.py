@@ -1,6 +1,6 @@
 import os
 import gradio as gr
-from fastrtc import ReplyOnPause, Stream, WebRTC, get_stt_model, get_tts_model
+from fastrtc import ReplyOnPause, WebRTC, get_stt_model, get_tts_model
 from openai import OpenAI
 import numpy as np
 
