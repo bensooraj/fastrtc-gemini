@@ -80,4 +80,4 @@ with gr.Blocks() as stream_ui:
         """
     )
 
-stream_ui.launch()
+stream_ui.launch(server_name="0.0.0.0", server_port=7860)
