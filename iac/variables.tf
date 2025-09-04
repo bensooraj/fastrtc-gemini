@@ -43,3 +43,7 @@ variable "github_repo_url" {
 variable "gemini_api_key" {
   type = string
 }
+
+variable "acm_certificate_arn" {
+  type = string
+}
