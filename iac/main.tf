@@ -200,7 +200,8 @@ resource "aws_instance" "app" {
 
   user_data = base64encode(templatefile("${path.module}/user_data/user_data.sh.tftpl", {
     github_repo_url = var.github_repo_url,
-    gemini_api_key  = var.gemini_api_key
+    gemini_api_key  = var.gemini_api_key,
+    turn_hf_token   = var.turn_hf_token
   }))
 
   tags = { Name = "${var.name}-ec2" }

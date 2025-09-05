@@ -8,6 +8,7 @@ WorkingDirectory=/opt/app
 ExecStart=/root/.local/bin/uv run fastrtc-gemini
 Restart=always
 RestartSec=3
+EnvironmentFile="/opt/app/iac/user_data/fastrtc.service.envfile"
 Environment="PATH=/opt/app/app/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/.local/bin"
 
 [Install]

@@ -19,10 +19,18 @@ git clone ${github_repo_url} app
 cd app
 
 # Copy systemd service script
+export GEMINI_API_KEY=${gemini_api_key}
+export HF_TOKEN=${turn_hf_token}
+# touch user_data/fastrtc.service.envfile
+touch iac/user_data/fastrtc.service.envfile
+# cat > iac/user_data/fastrtc.service.envfile <<- "EOF"
+cat > user_data/fastrtc.service.envfile <<- EOF
+GEMINI_API_KEY=$GIBBER_TEST
+HF_TOKEN=$GIBBER_TESTEST
+EOF
 cp iac/user_data/fastrtc.service /etc/systemd/system/fastrtc.service
 
 # Dependency sync (uses pyproject.toml + uv.lock)
-export GEMINI_API_KEY=${gemini_api_key}
 uv sync --frozen --no-cache
 
 systemctl daemon-reload
