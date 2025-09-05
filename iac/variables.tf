@@ -44,6 +44,10 @@ variable "gemini_api_key" {
   type = string
 }
 
+variable "turn_hf_token" {
+  type = string
+}
+
 variable "acm_certificate_arn" {
   type = string
 }

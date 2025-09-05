@@ -1,6 +1,12 @@
 import os
 import gradio as gr
-from fastrtc import ReplyOnPause, WebRTC, get_stt_model, get_tts_model
+from fastrtc import (
+    ReplyOnPause,
+    WebRTC,
+    get_stt_model,
+    get_tts_model,
+    get_hf_turn_credentials,
+)
 from openai import OpenAI
 import numpy as np
 
@@ -66,6 +72,7 @@ with gr.Blocks() as stream_ui:
             audio = WebRTC(
                 mode="send-receive",
                 modality="audio",
+                rtc_configuration=get_hf_turn_credentials,
             )
         audio.stream(
             fn=ReplyOnPause(response), inputs=[audio], outputs=[audio], time_limit=60
@@ -80,4 +87,9 @@ with gr.Blocks() as stream_ui:
         """
     )
 
-stream_ui.launch(server_name="0.0.0.0", server_port=7860)
+stream_ui.launch(
+    server_name="0.0.0.0",
+    server_port=7860,
+    ssr_mode=True,
+    strict_cors=False,
+)
