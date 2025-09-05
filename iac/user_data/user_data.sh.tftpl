@@ -25,8 +25,8 @@ export HF_TOKEN=${turn_hf_token}
 touch iac/user_data/fastrtc.service.envfile
 # cat > iac/user_data/fastrtc.service.envfile <<- "EOF"
 cat > user_data/fastrtc.service.envfile <<- EOF
-GEMINI_API_KEY=$GIBBER_TEST
-HF_TOKEN=$GIBBER_TESTEST
+GEMINI_API_KEY=$GEMINI_API_KEY
+HF_TOKEN=$HF_TOKEN
 EOF
 cp iac/user_data/fastrtc.service /etc/systemd/system/fastrtc.service
 
